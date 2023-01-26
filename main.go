@@ -1,37 +1,20 @@
 package main
 
 import (
-	"net/http"
-
-	"time"
-
 	"github.com/gin-gonic/gin"
+	"github.com/levelmeup/levelmeup/internal/views"
 )
-
-type Skill struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-
-	IsActive  bool      `json:"isActive"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
-}
-
-var DefaultSkills = []Skill{
-	{ID: 1, Name: "COOKING", IsActive: true, CreatedAt: time.Now(), UpdatedAt: time.Now()},
-	{ID: 2, Name: "EXCERCISING", IsActive: true, CreatedAt: time.Now(), UpdatedAt: time.Now()},
-	{ID: 3, Name: "READING", IsActive: true, CreatedAt: time.Now(), UpdatedAt: time.Now()},
-	{ID: 4, Name: "CODING", IsActive: true, CreatedAt: time.Now(), UpdatedAt: time.Now()},
-	{ID: 5, Name: "PAINTING", IsActive: true, CreatedAt: time.Now(), UpdatedAt: time.Now()},
-}
-
-func getSkills(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, DefaultSkills)
-}
 
 func main() {
 	router := gin.Default()
-	router.GET("/skills", getSkills)
+	router.GET("/skills", views.GetSkills)
+	router.GET("/skills/:id", views.GetSkill)
+
+	router.GET("/priorityLevels", views.GetPriorityLevels)
+	router.GET("/priorityLevels/:id", views.GetPriorityLevel)
+
+	router.GET("/quests", views.GetQuests)
+	router.GET("/quests/:id", views.GetQuest)
 
 	router.Run("localhost:8080")
 }
